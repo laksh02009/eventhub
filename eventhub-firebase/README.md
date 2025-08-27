@@ -1,17 +1,38 @@
-# EventHub (Firebase version)
+# EventHub - University Event Management System
 
-This is a front-end demo of the University Event Management System backed by **Firebase Auth (Google)** and **Firestore**.
-Replace the Firebase config placeholders in `app-firebase.js` with your project's config and enable Firestore + Google Auth in Firebase Console.
+A front-end demo of a **University Event Management System** backed by **Firebase Auth (Google)** and **Firestore**. Create, manage, and RSVP for events in real time.
 
-## Quick start
+---
 
-1. Replace Firebase config in `app-firebase.js` (see TODO inside the file).
-2. Run a local server (recommended):
-   - Using Python: `python -m http.server 8000`
-   - Or use VS Code Live Server extension.
-3. Open http://localhost:8000 in your browser.
-4. Sign in (Google), create events, and click RSVP to enroll students.
+## Features
 
-## Notes
-- This demo uses Firestore `events` collection. For production, set up proper Firestore security rules.
-- Events are real-time; any change syncs to all clients.
+- Google Sign-In for event creators and students.
+- Create, edit, and delete events.
+- RSVP functionality for students.
+- Real-time event updates via Firestore.
+- Filter, search, and sort events.
+- Export events as CSV.
+- Light/Dark theme toggle.
+- Fully responsive, accessible UI.
+
+---
+
+## Setup
+
+### 1. Firebase Configuration
+
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Create a new project.
+3. Enable **Firestore Database**.
+4. Enable **Google Authentication**.
+5. Copy your Firebase config and replace the placeholders in `app-firebase.js`:
+
+```js
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
