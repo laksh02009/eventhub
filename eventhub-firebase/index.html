@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>University Event Management System</title>
+  <meta name="description" content="Plan, publish, and manage university events with ease." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🎓</div>
+      <div>
+        <h1>EventHub</h1>
+        <p class="subtitle">University Event Management System</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btnAddEvent" class="btn primary" aria-haspopup="dialog" aria-controls="eventDialog">
+        + Create Event
+      </button>
+      <button id="btnExport" class="btn ghost" title="Export events to CSV">Export CSV</button>
+      <button id="btnDark" class="btn ghost" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+
+      <!-- 🔹 Firebase Auth UI -->
+      <span id="userInfo" style="color: var(--muted); font-size:0.9rem; margin-left:8px;"></span>
+      <button id="btnLogin" class="btn ghost">Login with Google</button>
+      <button id="btnLogout" class="btn ghost hidden">Logout</button>
+    </div>
+  </header>
+
+  <main class="container" id="main" role="main">
+    <section class="toolbar" aria-label="Tools">
+      <div class="search">
+        <label for="searchInput" class="sr-only">Search events</label>
+        <input id="searchInput" type="search" placeholder="Search by title, host, or tags…" autocomplete="off" />
+      </div>
+
+      <div class="filters">
+        <label>
+          Category
+          <select id="filterCategory">
+            <option value="">All</option>
+            <option>Tech</option>
+            <option>Sports</option>
+            <option>Cultural</option>
+            <option>Academic</option>
+            <option>Workshop</option>
+          </select>
+        </label>
+
+        <label>
+          Status
+          <select id="filterStatus">
+            <option value="">All</option>
+            <option>Upcoming</option>
+            <option>Ongoing</option>
+            <option>Past</option>
+          </select>
+        </label>
+
+        <label>
+          Sort by
+          <select id="sortBy">
+            <option value="dateAsc">Date ↑</option>
+            <option value="dateDesc">Date ↓</option>
+            <option value="titleAsc">Title A–Z</option>
+            <option value="titleDesc">Title Z–A</option>
+            <option value="rsvpsDesc">Most RSVPs</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section aria-live="polite" aria-busy="false">
+      <div id="emptyState" class="empty hidden">
+        <img src="assets/empty.svg" alt="" />
+        <h2>No events yet</h2>
+        <p>Create your first event to get started.</p>
+        <button id="emptyCreate" class="btn primary">+ Create Event</button>
+      </div>
+
+      <div id="grid" class="grid" role="list"></div>
+    </section>
+  </main>
+
+  <!-- Event Dialog -->
+  <dialog id="eventDialog" aria-labelledby="dlgTitle">
+    <form id="eventForm" method="dialog">
+      <header class="dialog-header">
+        <h2 id="dlgTitle">Create Event</h2>
+        <button type="button" class="icon-btn" id="dlgClose" aria-label="Close dialog">✕</button>
+      </header>
+
+      <div class="form-grid">
+        <label>Title
+          <input name="title" id="title" required maxlength="80" />
+        </label>
+
+        <label>Host
+          <input name="host" id="host" required maxlength="60" />
+        </label>
+
+        <label>Category
+          <select name="category" id="category" required>
+            <option>Tech</option>
+            <option>Sports</option>
+            <option>Cultural</option>
+            <option>Academic</option>
+            <option>Workshop</option>
+          </select>
+        </label>
+
+        <label>Date & Time
+          <input type="datetime-local" name="datetime" id="datetime" required />
+        </label>
+
+        <label>Venue
+          <input name="venue" id="venue" required maxlength="80" />
+        </label>
+
+        <label>Capacity
+          <input type="number" min="1" max="10000" name="capacity" id="capacity" placeholder="e.g., 200" required />
+        </label>
+
+        <label>Tags (comma separated)
+          <input name="tags" id="tags" placeholder="AI, Career, Music" />
+        </label>
+
+        <label>Description
+          <textarea name="description" id="description" rows="4" maxlength="300" placeholder="What is the event about?"></textarea>
+        </label>
+
+        <label>Cover Image (URL)
+          <input name="cover" id="cover" placeholder="https://… (optional)" />
+        </label>
+      </div>
+
+      <footer class="dialog-footer">
+        <button class="btn ghost" value="cancel" type="button" id="btnCancel">Cancel</button>
+        <button class="btn" type="button" id="btnDelete" data-hidden="true">Delete</button>
+        <button class="btn primary" id="btnSave" type="submit">Save</button>
+      </footer>
+      <input type="hidden" id="eventId" />
+    </form>
+  </dialog>
+
+  <template id="cardTemplate">
+    <article class="card" role="listitem" tabindex="0">
+      <div class="card-media" aria-hidden="true"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="badge"></span>
+          <span class="category"></span>
+        </div>
+        <h3 class="title"></h3>
+        <p class="meta"></p>
+        <p class="desc"></p>
+        <div class="chips"></div>
+      </div>
+      <div class="card-actions">
+        <button class="btn small ghost rsvpBtn">RSVP</button>
+        <button class="btn small editBtn">Edit</button>
+      </div>
+    </article>
+  </template>
+
+  <!-- ✅ Link Firebase-enabled JS -->
+  <script type="module" src="app-firebase.js"></script>
+</body>
+</html>
