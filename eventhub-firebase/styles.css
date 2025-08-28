@@ -127,11 +127,22 @@ html, body { height: 100%; margin: 0; font:16px/1.5 system-ui, -apple-system, Se
 
 .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.3); }
 .card-media {
-  height: 140px;
-  background: linear-gradient(120deg, rgba(110,168,254,.2), transparent);
-  background-size: cover;
-  background-position: center;
+  height: 180px;              /* make it a bit taller */
+  overflow: hidden;           /* crop overflowing image */
+  border-radius: 12px 12px 0 0;
+  background: #222;           /* fallback color only */
+  display: flex;              /* center img if needed */
+  align-items: center;
+  justify-content: center;
 }
+
+.card-media img.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* fills nicely */
+  display: block;
+}
+
 
 .card-body { padding: 1rem; display: flex; flex-direction: column; gap: .4rem; }
 .card-top { display: flex; justify-content: space-between; align-items: center; }
